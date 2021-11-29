@@ -1,0 +1,10 @@
+.nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #1a2036;
+    padding: 10px;
+    border-radius: 15px;
+    height: auto;
+}

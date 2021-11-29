@@ -1,0 +1,32 @@
+html,
+body,
+#root {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #1a2036;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.App {
+    display: flex;
+    flex-direction: row;
+    padding: 3em 2em;
+    border-radius: 15px;
+    width: 80%;
+    min-height: 50%;
+    gap: 2em;
+    /* background: url('https://www.uidesigndaily.com/uploads/1466/day_1466.png'); */
+    background: #242b42;
+    background-size: contain;
+    overflow: hidden;
+}
