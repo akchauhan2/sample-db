@@ -24,9 +24,52 @@ body,
     border-radius: 15px;
     width: 80%;
     min-height: 50%;
+    max-height: 80%;
     gap: 2em;
     /* background: url('https://www.uidesigndaily.com/uploads/1466/day_1466.png'); */
     background: #242b42;
     background-size: contain;
     overflow: hidden;
+}
+
+@media screen and (max-width: 900px) {
+    .App {
+        flex-direction: column;
+        padding: 20px;
+        width: 90%;
+        min-height: unset;
+        max-height: 90%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .App {
+        width: 95%;
+        min-height: unset;
+        max-height: 95%;
+        border-radius: 0px;
+    }
+}
+
+.center {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    text-align: center;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #242b42;
+    border: none;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    border: none;
+    background-color: #1a2036;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #1a2036;
+    border: none;
 }

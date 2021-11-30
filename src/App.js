@@ -1,20 +1,17 @@
-import Nav from './Components/Nav/Nav';
-import Main from './Components/Main/Main';
-import { ThemeContextProvider } from './context/ThemeContext';
+import Nav from "./Components/Nav/Nav";
+import Main from "./Components/Main/Main";
+import { useState } from "react";
 
-import './App.css';
-import { useState } from 'react';
+import "./App.css";
 function App() {
-  const [number, setNumber] = useState(0)
-  const randomize = () => {
-    setNumber(num=>num+1)
-  }
+  const [name, setName] = useState(0);
+  const randomize = (name) => {
+    setName(name);
+  };
   return (
     <div className="App">
-      <ThemeContextProvider>
         <Nav randomize={randomize} />
-        <Main number={number}/>
-      </ThemeContextProvider>
+        <Main name={name} />
     </div>
   );
 }

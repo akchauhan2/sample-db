@@ -6,28 +6,28 @@ import { FiSettings, FiUsers } from "react-icons/fi";
 // import { ThemeContext } from "../../context/ThemeContext";
 import "./Nav.css";
 function Nav({ randomize }) {
-  const clickHandler = () => {
-    randomize();
+  const clickHandler = (name) => { 
+    randomize(name);
   };
   // const theme = useContext(ThemeContext);
   const initialIcons = [
     {
-      name: "chat",
+      name: "Chat",
       icon: <BsChatLeftText />,
       link: "#",
     },
     {
-      name: "people",
+      name: "People",
       icon: <FiUsers />,
       link: "#",
     },
     {
-      name: "bomb",
+      name: "Bomb",
       icon: <BiBomb />,
       link: "#",
     },
     {
-      name: "settings",
+      name: "Settings",
       icon: <FiSettings />,
       link: "#",
     },
@@ -38,16 +38,37 @@ function Nav({ randomize }) {
   }, [])
   return (
     <div className="nav">
-      {icons.map(({ name, link, icon }) => (
-        <div onClick={() => clickHandler()} key={name}>
-          <Icon>{icon}</Icon>
-        </div>
-      ))}
+      <Navbar>
+        {icons.map(({ name, link, icon }) => (
+          <div onClick={() => clickHandler(name)} key={name}>
+            <Icon>{icon}</Icon>
+          </div>
+        ))}
+      </Navbar>
     </div>
   );
 }
 
 export default Nav;
+
+const Navbar = styled.div`
+  background: #1a2036;
+  padding: 4em 10px;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  @media (max-width: 900px) {
+    flex-direction: row;
+    height: auto;
+    padding: 10px;
+    flex: 1;
+    width: 100%;
+    justify-content: space-evenly;
+  }
+`;
 
 const Icon = styled.div`
   color: #a8b0cf;

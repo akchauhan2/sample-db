@@ -1,9 +1,41 @@
 import React, { useEffect, useState } from "react";
+import {  BsPlusCircle } from "react-icons/bs";
+import { FaRegTimesCircle } from "react-icons/fa";
 import styled from "styled-components";
-
-function MainBody({ number }) {
-  const generateRandomNumber = () => (Math.random() * 1000).toFixed();
+import {Zoom} from "react-reveal";
+function MainBody({ name }) {
+  const generateRandomNumber = () => (Math.random() * 100).toFixed();
   const generateRandomBoolean = () => !Math.round(Math.random());
+
+  const addNew = ({ h2, img }, reset) => {
+    setItems((items) => {
+      return [
+        ...items,
+        {
+          img,
+          h2,
+          on: generateRandomBoolean(),
+          h4: generateRandomNumber() + " Members",
+        },
+      ];
+    });
+    reset(true);
+  };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    addNew(
+      {
+        h2: e.currentTarget.name.value,
+        img: e.currentTarget.image.value,
+      },
+      function (res) {
+        if (res) {
+          e.currentTarget.reset();
+          setAdd(false);
+        }
+      }
+    );
+  };
 
   const initialItems = [
     {
@@ -55,23 +87,54 @@ function MainBody({ number }) {
       h2: "Food",
     },
   ];
-  const [items, setItems] = useState([]);
+  const [add, setAdd] = useState(false);
+  const [items, setItems] = useState(initialItems);
   useEffect(() => {
-    initialItems.sort(() => 0.5 - Math.random());
-    setItems(initialItems);
-  }, [number]);
+    setItems([...items].sort(() => 0.5 - Math.random()));
+  }, [name]);
+
+
   return (
     <Cards>
+      {add && (
+        <NewCard>
+          <Cancel onClick={() => setAdd(false)}>
+            <FaRegTimesCircle />
+          </Cancel>
+          <Form onSubmit={(e) => submitHandler(e)}>
+            <H2>Add New</H2>
+            <Input name="name" type="text" required placeholder="Name" />
+            <Input name="image" type="text" required placeholder="Image Url" />
+            <RightAlign>
+              <Button type="submit" />
+            </RightAlign>
+          </Form>
+        </NewCard>
+      )}
+      {!add && (
+        <Card>
+          <Body>
+            <A onClick={() => setAdd(true)}>
+              <BsPlusCircle className="icon-100" />
+            </A>
+            <H4>Add New</H4>
+          </Body>
+        </Card>
+      )}
       {items.map(({ img, h4, h2, on }) => (
         <Card key={h2}>
-          {on && <On />}
-          <Header>
-            <Img src={img} alt="" />
-          </Header>
-          <Body>
-            <H2>{h2}</H2>
-            <H4>{h4}</H4>
-          </Body>
+          <Zoom>
+            <>
+              {on && <On />}
+              <Header>
+                <Img src={img} alt="" />
+              </Header>
+              <Body>
+                <H2>{h2}</H2>
+                <H4>{h4}</H4>
+              </Body>
+            </>
+          </Zoom>
         </Card>
       ))}
     </Cards>
@@ -81,28 +144,52 @@ function MainBody({ number }) {
 export default MainBody;
 const Cards = styled.div`
   border-radius: 10px;
-  display: flex; 
+  display: flex;
   margin: 15px 0;
-  align-items: center; 
+  align-items: center;
   flex-wrap: wrap;
-  gap:1em
+  gap: 1em;
+  padding: 5px;
+  flex: 1;
+  justify-content: space-evenly;
+  overflow: auto;
+  @media (max-width: 768px) {
+    justify-content: space-around;
+  }
 `;
 const Card = styled.div`
-  border-radius: 10px; 
-  position:relative;
+  border-radius: 10px;
+  position: relative;
   display: flex;
-  flex:1;
+  flex: 1;
   min-width: 170px;
   max-width: 170px;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   background: #1a2036;
-  padding: 2.5em 1.5em; 
+  padding: 2em 1.5em;
+  @media (max-width: 768px) {
+    max-width: 200%;
+  }
+`;
+const NewCard = styled.div`
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-width: 170px;
+  max-width: 170px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background: #1a2036;
+  padding: 1.5em 1.5em .5em;
 `;
 const Header = styled.div`
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 63px;
+  margin: 0 auto;
 `;
 const Img = styled.img`
   border-radius: 50%;
@@ -120,17 +207,29 @@ const Body = styled.div`
   padding: 10px;
   margin-top: 10px;
 `;
+const A = styled.a`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 35px;
+  text-align: center;
+  margin-bottom: 0.5em;
+  color: #fff;
+  cursor: pointer;
+`;
 const H2 = styled.div`
   display: flex;
   justify-content: center;
-  flex-direction: column; 
-  font-size:22px
+  flex-direction: column;
+  font-size: 22px;
+  color: #fff;
 `;
 const H4 = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
   font-size: 15px;
+  color: #fff;
 `;
 const On = styled.div`
   position: absolute;
@@ -139,6 +238,45 @@ const On = styled.div`
   height: 7px;
   border-radius: 50%;
   background: #8e66ff;
-  top: 10%;
-  right: 10%;
+  top: -1em;
+  right: -1em;
+`;
+
+const Form = styled.form`
+  box-sizing: border-box;
+  display: flex;
+  padding: 1em;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+`;
+const Input = styled.input`
+  box-sizing: border-box;
+  max-width: 80%;
+  border-radius: 0.3em;
+  padding: 5% 6px;
+  outline: none;
+  border: none;
+`;
+const Button = styled.input`
+  padding: 0.5em 1em;
+  background: #8e66ff;
+  outline: none;
+  border: none;
+  border-radius: 0.25em;
+`;
+const RightAlign = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 80%;
+`;
+const Cancel = styled.div`
+  position: absolute;
+  top: .5em;
+  right: 0.3em;
+  font-size: 1.5em;
+  color: #fff;
+  cursor: pointer;
 `;

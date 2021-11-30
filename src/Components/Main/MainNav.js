@@ -4,12 +4,12 @@ import { BsMenuButtonWide } from "react-icons/bs";
 import { CgMenuGridO } from "react-icons/cg";
 import styled from "styled-components";
 
-function MainNav() {
+function MainNav({name}) {
   return (
     <Root>
       <RootLeft>
         <BiLeftArrowAlt style={{ fontSize: "1.3em" }} />
-        Groups
+        {name || "Groups"}
       </RootLeft>
       <RootRight>
         <Icon>
@@ -35,14 +35,14 @@ const RootLeft = styled.div`
   justify-content: center;
   align-items: center;
   gap: 5px;
-  font-size:1.3em
+  font-size:1.7em
 `;
 
 const RootRight = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2px;
+  gap: .4em;
 `;
 const Icon = styled.div`
   display: flex;
@@ -52,4 +52,5 @@ const Icon = styled.div`
   border: 1px solid #1a2036;
   background: #15202b;
   border-radius: 3px;
+  font-size: 1.7em;
 `;
